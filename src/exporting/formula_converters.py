@@ -32,12 +32,18 @@ def latex_to_omml(latex: str) -> str:
     export formats, not to the OMML export path.
     """
     latex = normalize_latex_for_export(latex)
-    import lxml.etree as etree
-
     mathml = mathml_standardize(
         convert_latex_with_mathjax(latex, outputs=("mathml",))["mathml"]
     )
-    mathml_doc = etree.fromstring(mathml.encode("utf-8"))
+    return mathml_to_omml(mathml)
+
+
+def mathml_to_omml(mathml: str) -> str:
+    """Convert MathML to OMML with the stylesheet shipped by Microsoft Word."""
+    import lxml.etree as etree
+
+    parser = etree.XMLParser(resolve_entities=False, no_network=True, load_dtd=False)
+    mathml_doc = etree.fromstring(mathml.encode("utf-8"), parser)
     omml_doc = _cached_mml2omml_transform()(mathml_doc)
     result = etree.tostring(omml_doc, encoding="unicode")
     if not _looks_like_omml(result):
@@ -45,7 +51,21 @@ def latex_to_omml(latex: str) -> str:
     return _repair_empty_nary_operands(result)
 
 
+# Word for Mac ships the converter inside its app bundle under a lowercase name.
+_MACOS_WORD_STYLESHEET = "Microsoft Word.app/Contents/Resources/mathml2omml.xsl"
+
+
+def _macos_application_directories() -> tuple[Path, ...]:
+    return (Path("/Applications"), Path.home() / "Applications")
+
+
 def _find_mml2omml_xsl() -> Path | None:
+    if sys.platform == "darwin":
+        for applications in _macos_application_directories():
+            stylesheet = applications / _MACOS_WORD_STYLESHEET
+            if stylesheet.is_file():
+                return stylesheet
+        return None
     if sys.platform != "win32":
         return None
 

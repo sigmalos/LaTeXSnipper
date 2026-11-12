@@ -78,6 +78,32 @@ def assemble_linux_integration(directory: Path) -> None:
             script.chmod(0o755)
 
 
+def assemble_office_addin(directory: Path) -> None:
+    """Copy the macOS Office add-in pages and the shared Windows editor.
+
+    The layout matches ``integration.office_addin.assets.packaged_assets``.
+    MathJax is not copied: the add-in serves the desktop runtime's copy.
+    """
+    plugin = ROOT / "office_plugin"
+    ignore = shutil.ignore_patterns(".DS_Store", "tools")
+    shutil.copytree(plugin / "macos/web", directory / "web", ignore=ignore)
+    shutil.copytree(
+        plugin / "src/LaTeXSnipper.OfficePlugin.Editor/EditorAssets",
+        directory / "shared",
+        ignore=ignore,
+    )
+    shutil.copytree(
+        plugin / "hosts/WordAddIn/EditorAssets/support",
+        directory / "support",
+        ignore=ignore,
+    )
+    shutil.copy2(
+        plugin / "src/LaTeXSnipper.OfficePlugin.Rendering/MathJaxTypographyAdapter.js",
+        directory / "MathJaxTypographyAdapter.js",
+    )
+    shutil.copy2(plugin / "macos/manifest.xml", directory / "manifest.xml")
+
+
 def assemble(args: argparse.Namespace) -> None:
     application = args.application.resolve()
     application.mkdir(parents=True, exist_ok=True)
@@ -119,6 +145,8 @@ def assemble(args: argparse.Namespace) -> None:
         ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo", "*.onnx"),
     )
     shutil.copy2(ROOT / "LICENSE", application / "LICENSE")
+    if args.target.startswith("macos-"):
+        assemble_office_addin(application / "office_addin")
     if args.target.startswith("linux-"):
         assemble_linux_integration(application / "linux-integration")
 

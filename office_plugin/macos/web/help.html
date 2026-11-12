@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LaTeXSnipper Office 帮助</title>
+  <style>
+    :root { color-scheme: light; --bg: #f4f7fc; --paper: #fff; --ink: #182b45; --muted: #66788f; --line: #dce4ef; --blue: #2563eb; --soft: #edf4ff; }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 28px; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.75 -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif; }
+    main { display: grid; grid-template-columns: 176px minmax(0, 1fr); gap: 0 36px; max-width: 1100px; min-height: 100vh; margin: auto; padding: 36px 40px 44px; background: var(--paper); }
+    header { grid-column: 1 / -1; margin-bottom: 32px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+    .brand { color: var(--blue); font-weight: 650; }
+    .brand span { margin-left: 12px; color: var(--muted); font-weight: 400; }
+    h1 { margin: 12px 0 8px; font-size: 30px; font-weight: 650; line-height: 1.3; }
+    h2 { margin: 0 0 18px; font-size: 21px; font-weight: 650; line-height: 1.4; }
+    h3 { margin: 24px 0 8px; font-size: 15px; font-weight: 650; }
+    p { margin: 0 0 14px; }
+    a { color: var(--blue); }
+    a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+    nav { grid-column: 1; grid-row: 2; position: sticky; top: 28px; align-self: start; display: flex; flex-direction: column; gap: 4px; max-height: calc(100vh - 56px); overflow: auto; padding-right: 18px; border-right: 1px solid var(--line); }
+    .nav-title { margin: 0 0 8px; padding: 0 10px; color: var(--muted); font-size: 12px; }
+    nav a { padding: 8px 10px; border-radius: 6px; color: var(--muted); text-decoration: none; font-weight: 600; }
+    nav a:hover, nav a:focus-visible { color: var(--blue); background: var(--soft); }
+    .guide-content { grid-column: 2; min-width: 0; }
+    section { margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid var(--line); }
+    section:target h2 { color: var(--blue); }
+    .lead, .muted { color: var(--muted); }
+    .lead { margin-bottom: 0; }
+    .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .step { padding: 16px; border: 1px solid var(--line); border-radius: 8px; background: #f8fafd; }
+    .step-number { display: block; margin-bottom: 8px; color: var(--blue); font-size: 22px; font-weight: 600; line-height: 1.2; }
+    .step strong { display: block; margin-bottom: 6px; }
+    .step p { margin: 0; color: var(--muted); font-size: 13px; }
+    .callout { margin-top: 16px; padding: 12px 16px; border-left: 3px solid var(--blue); background: var(--soft); font-size: 13px; }
+    ul, ol { margin: 8px 0 16px; padding-left: 20px; }
+    li { margin: 8px 0; }
+    .editor-topics { margin: 0; padding: 0; list-style: none; }
+    .editor-topics li { margin: 0 0 18px; }
+    .editor-topics li:last-child { margin-bottom: 0; }
+    .editor-topics strong { display: block; margin-bottom: 4px; }
+    table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 13px; line-height: 1.65; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #f4f7fc; font-weight: 650; }
+    th:first-child, td:first-child { width: 136px; font-weight: 600; }
+    code, kbd { padding: 2px 5px; border: 1px solid var(--line); border-radius: 4px; background: #f6f9fe; font: 12px Menlo, monospace; }
+    kbd { box-shadow: 0 1px 0 var(--line); white-space: nowrap; }
+    .platform-word, .platform-powerpoint, .lang-en { display: none; }
+    .app-word .platform-word, .app-powerpoint .platform-powerpoint { display: block; }
+    html[lang="en"] .lang-en { display: grid; }
+    html[lang="en"] .lang-zh { display: none; }
+    footer { color: var(--muted); font-size: 12px; }
+    .support-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .support-card { margin: 0; padding: 16px 12px; border: 1px solid var(--line); border-radius: 8px; text-align: center; }
+    .support-card img { display: block; width: min(100%, 176px); aspect-ratio: 1; object-fit: contain; margin: 0 auto 12px; }
+    .support-card figcaption { font-size: 13px; font-weight: 600; }
+    @media (max-width: 900px) {
+      main, html[lang="en"] .lang-en { display: block; padding: 28px 24px 36px; }
+      header { margin-bottom: 24px; padding-bottom: 24px; }
+      nav { position: static; flex-direction: row; flex-wrap: wrap; max-height: none; margin-bottom: 28px; padding: 0 0 20px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .nav-title { flex-basis: 100%; padding: 0; }
+      nav a { background: #f4f7fc; }
+    }
+    @media (max-width: 600px) {
+      main, html[lang="en"] .lang-en { padding: 24px 20px 32px; }
+      h1 { font-size: 26px; }
+      .steps, .support-grid { grid-template-columns: 1fr; }
+      .step { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 0 12px; }
+      .step-number { grid-row: 1 / span 2; margin: 2px 0 0; }
+      .step p { grid-column: 2; }
+      th, td { padding: 10px 8px; }
+      th:first-child, td:first-child { width: 100px; }
+    }
+  </style>
+</head>
+<body class="app-word">
+  <main class="lang-zh">
+    <header>
+      <div class="brand">LaTeXSnipper<span>macOS Office 插件帮助</span></div>
+      <h1>在 Word 和 PowerPoint 中使用 LaTeX 公式</h1>
+      <p class="lead">插件页面由正在运行的 LaTeXSnipper 桌面端提供。公式编辑和渲染在本机完成；截图识别复用桌面端的识别结果。</p>
+    </header>
+    <nav aria-label="帮助目录">
+      <p class="nav-title">目录</p>
+      <a href="#zh-start">开始使用</a><a class="platform-word" href="#zh-word">Word 操作</a><a class="platform-powerpoint" href="#zh-ppt">PowerPoint 操作</a><a href="#zh-ocr">截图识别</a><a href="#zh-limits">与 Windows 版的区别</a><a href="#zh-support">社区与支持</a>
+    </nav>
+    <div class="guide-content">
+      <section id="zh-start">
+        <h2>开始使用</h2>
+        <div class="steps">
+          <div class="step"><span class="step-number">1</span><strong>启动桌面端</strong><p>在 LaTeXSnipper“设置”中启用“Office 插件”。插件只在桌面端运行时可用。</p></div>
+          <div class="step"><span class="step-number">2</span><strong>打开选项卡</strong><p>重新打开 Word 或 PowerPoint，在“开始 › 加载项”中选择 LaTeXSnipper，功能区随后出现 LaTeXSnipper 选项卡。</p></div>
+          <div class="step"><span class="step-number">3</span><strong>插入公式</strong><p>点击“插入公式”打开编辑器，<kbd>Shift</kbd> + <kbd>Enter</kbd> 插入或更新公式。</p></div>
+        </div>
+        <p class="callout">首次启用时，macOS 会请求信任一张仅用于 localhost 的证书。Office 只能通过 HTTPS 加载插件页面，此证书不能签发其他证书，也不会用于本机以外的地址。</p>
+      </section>
+      <section id="zh-word" class="platform-word">
+        <h2>Word 操作</h2>
+        <ul>
+          <li><strong>插入方式：</strong>默认插入 Word 原生公式（OMML），也可在设置中切换为 SVG 图片。原生公式由 Word 排版，SVG 图片与 Windows 版 OLE 公式使用同一渲染结果。</li>
+          <li><strong>加载所选：</strong>把光标放在公式内或选中公式，点击“加载所选”在编辑器中修改，更新时保持原插入方式。</li>
+          <li><strong>删除所选 / 格式化：</strong>可处理选区内的多个公式；“格式化全部”将文档中的全部插件公式重置为当前默认样式。</li>
+          <li><strong>行间公式：</strong>状态窗格中勾选“行间公式”后插入，公式独占一段。</li>
+        </ul>
+      </section>
+      <section id="zh-ppt" class="platform-powerpoint">
+        <h2>PowerPoint 操作</h2>
+        <ul>
+          <li><strong>插入方式：</strong>默认插入矢量 SVG 图片，也可切换为 PNG 图片。完整源码与样式保存在形状标签中，格式与 Windows 版相同，可在两个平台之间互相加载。</li>
+          <li><strong>更新：</strong>保持公式的位置和用户调整过的缩放比例；“格式化”命令恢复自然尺寸。</li>
+        </ul>
+      </section>
+      <section id="zh-ocr">
+        <h2>截图识别</h2>
+        <p>先在桌面端“设置”中开启“自动化接口”。点击“截图识别”后，用 LaTeXSnipper 的截图快捷键框选公式；识别结果会载入状态窗格，确认后再插入。再次点击按钮可取消等待。</p>
+      </section>
+      <section id="zh-limits">
+        <h2>与 Windows 版的区别</h2>
+        <p>Office for Mac 不支持 VSTO 和自定义 OLE 对象，因此以下功能目前只在 Windows 版提供：OLE 公式对象与双击编辑、MathType 互转、Word 自动编号与交叉引用、全文 LaTeX 解析。Windows 版插入的 OLE 公式在 Mac 上显示为图片，不能加载编辑。</p>
+      </section>
+      <section id="zh-support">
+        <h2>社区与支持</h2>
+        <p>项目免费开源，没有广告和内购。欢迎给仓库点 Star、反馈问题，或通过下面的二维码赞助维护并加入中文交流群。</p>
+        <div class="support-grid">
+          <figure class="support-card"><img src="/support/alipay.jpg" alt="支付宝收款码"><figcaption>支付宝赞助</figcaption></figure>
+          <figure class="support-card"><img src="/support/wechat-pay.png" alt="微信收款码"><figcaption>微信赞助</figcaption></figure>
+          <figure class="support-card"><img src="/support/community-chat.jpg" alt="LaTeXSnipper 中文交流群二维码"><figcaption>中文交流群</figcaption></figure>
+        </div>
+      </section>
+      <footer>LaTeXSnipper · <a href="https://github.com/SakuraMathcraft/LaTeXSnipper">GitHub</a></footer>
+    </div>
+  </main>
+  <main class="lang-en">
+    <header>
+      <div class="brand">LaTeXSnipper<span>macOS Office add-in help</span></div>
+      <h1>LaTeX formulas in Word and PowerPoint</h1>
+      <p class="lead">The add-in pages are served by the running LaTeXSnipper desktop app. Editing and rendering stay on this Mac; screenshot OCR reuses the desktop recognition result.</p>
+    </header>
+    <nav aria-label="Help contents">
+      <p class="nav-title">Contents</p>
+      <a href="#en-start">Getting started</a><a class="platform-word" href="#en-word">Word</a><a class="platform-powerpoint" href="#en-ppt">PowerPoint</a><a href="#en-ocr">Screenshot OCR</a><a href="#en-limits">Differences from Windows</a>
+    </nav>
+    <div class="guide-content">
+      <section id="en-start">
+        <h2>Getting started</h2>
+        <div class="steps">
+          <div class="step"><span class="step-number">1</span><strong>Start the desktop app</strong><p>Enable “Office add-in” in LaTeXSnipper Settings. The add-in works only while the desktop app is running.</p></div>
+          <div class="step"><span class="step-number">2</span><strong>Open the tab</strong><p>Reopen Word or PowerPoint and choose LaTeXSnipper from Home › Add-ins. The LaTeXSnipper ribbon tab appears.</p></div>
+          <div class="step"><span class="step-number">3</span><strong>Insert a formula</strong><p>Click Insert Formula to open the editor. <kbd>Shift</kbd> + <kbd>Enter</kbd> inserts or updates it.</p></div>
+        </div>
+        <p class="callout">The first time, macOS asks you to trust a certificate that is valid only for localhost. Office loads add-in pages only over HTTPS; this certificate cannot sign other certificates.</p>
+      </section>
+      <section id="en-word" class="platform-word">
+        <h2>Word</h2>
+        <ul>
+          <li><strong>Insertion:</strong> native Word equations (OMML) by default, or SVG pictures. SVG pictures use the same rendering as the Windows OLE formulas.</li>
+          <li><strong>Load Selected:</strong> place the cursor in a formula and edit it; updates keep its insertion kind.</li>
+          <li><strong>Delete / Format:</strong> work on every formula in the selection; Format All resets every plugin formula to the current defaults.</li>
+        </ul>
+      </section>
+      <section id="en-ppt" class="platform-powerpoint">
+        <h2>PowerPoint</h2>
+        <ul>
+          <li><strong>Insertion:</strong> vector SVG pictures by default, or PNG. Source and style are stored in the Windows shape-tag format, so formulas load on either platform.</li>
+          <li><strong>Updates</strong> keep position and your resize scale; Format restores the natural size.</li>
+        </ul>
+      </section>
+      <section id="en-ocr">
+        <h2>Screenshot OCR</h2>
+        <p>Enable the Automation API in desktop Settings. Click Screenshot OCR, then capture the formula with the LaTeXSnipper shortcut. The result loads into the status pane. Click again to cancel.</p>
+      </section>
+      <section id="en-limits">
+        <h2>Differences from Windows</h2>
+        <p>Office for Mac does not support VSTO or custom OLE objects, so these remain Windows-only: OLE formula objects and double-click editing, MathType conversion, Word numbering and cross-references, and document-wide LaTeX parsing. OLE formulas from Windows display as pictures on Mac and cannot be loaded.</p>
+      </section>
+      <footer>LaTeXSnipper · <a href="https://github.com/SakuraMathcraft/LaTeXSnipper">GitHub</a></footer>
+    </div>
+  </main>
+  <script>
+    const params = new URLSearchParams(location.search);
+    document.body.className = params.get("host") === "powerpoint" ? "app-powerpoint" : "app-word";
+    document.documentElement.lang = (params.get("locale") || "zh-CN").toLowerCase().startsWith("zh") ? "zh-CN" : "en";
+    document.title = document.documentElement.lang === "zh-CN" ? "LaTeXSnipper Office 帮助" : "LaTeXSnipper Office Help";
+  </script>
+</body>
+</html>

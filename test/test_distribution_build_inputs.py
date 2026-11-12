@@ -940,6 +940,7 @@ def test_fixed_host_executes_business_bytecode_and_worker_source(
     (project / "LICENSE").write_text("license", encoding="utf-8")
     monkeypatch.setattr(assembler, "ROOT", project)
     monkeypatch.setattr(assembler, "assemble_linux_integration", lambda _: None)
+    monkeypatch.setattr(assembler, "assemble_office_addin", lambda _: None)
     target = {
         "win32": "windows-x86_64",
         "linux": "linux-x86_64",

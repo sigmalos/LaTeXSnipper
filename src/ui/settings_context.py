@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from ui.controllers.app_lifecycle import AppLifecycleController
     from ui.controllers.automation_api import AutomationApiController
     from ui.controllers.model_runtime import ModelRuntimeController
+    from ui.controllers.office_addin import OfficeAddinController
     from ui.controllers.status import StatusController
     from ui.controllers.theme import ThemeController
 
@@ -22,3 +23,4 @@ class SettingsContext:
     theme: ThemeController
     lifecycle: AppLifecycleController
     automation_api: AutomationApiController
+    office_addin: OfficeAddinController | None = None

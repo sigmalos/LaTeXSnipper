@@ -2,6 +2,8 @@
 
 Released Windows VSTO add-in for Microsoft Word and PowerPoint. It inserts and maintains LaTeXSnipper OLE formulas and provides native Word OMML and PowerPoint PNG alternatives. Formula editing and rendering are fully local; screenshot recognition uses the desktop Automation API as an ordinary authenticated client.
 
+Word and PowerPoint on macOS use the [macOS Office add-in](macos/README.md), which reuses this plugin's editor and renderer.
+
 OLE formulas use local MathJax layout and EMF vector presentations. Complete LaTeX source, rendering options, numbering information, and object identity are stored with each managed formula.
 
 ## Supported Office Versions

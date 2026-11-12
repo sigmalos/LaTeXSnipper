@@ -14,7 +14,11 @@ from qfluentwidgets import ComboBox, FluentIcon, PrimaryPushButton, PushButton
 
 from backend.external_model import PRESET_ITEMS
 from localization.manager import translate as tr
+from ui.controllers.office_addin import office_addin_supported
 from update.update_dialog import check_update_dialog
+
+
+SETTINGS_MIN_WIDTH = 420
 
 
 class SettingsLayoutMixin:
@@ -40,8 +44,8 @@ class SettingsLayoutMixin:
         )
         self.setWindowFlag(Qt.WindowType.WindowMaximizeButtonHint, True)
         self.setWindowTitle(tr("设置"))
-        self.resize(420, 460)
-        self.setMinimumWidth(420)
+        self.resize(SETTINGS_MIN_WIDTH, 460)
+        self.setMinimumWidth(SETTINGS_MIN_WIDTH)
         self.setMinimumHeight(460)
         root = QVBoxLayout(cast(QWidget, self))
         root.setSpacing(0)
@@ -251,6 +255,16 @@ class SettingsLayoutMixin:
             tr("允许 Office 插件、本机自动化工具及已授权远程设备调用 LaTeXSnipper")
         )
         startup_layout.addWidget(self.automation_api_button, 1)
+        self.office_addin_button = None
+        if getattr(self.context, "office_addin", None) is not None and office_addin_supported():
+            self.office_addin_button = PushButton(FluentIcon.DOCUMENT, tr("Office 插件"))
+            self.office_addin_button.setFixedHeight(36)
+            self.office_addin_button.setCheckable(True)
+            self.office_addin_button.setChecked(self.context.office_addin.enabled_preference())
+            self.office_addin_button.setToolTip(
+                tr("在 Word 和 PowerPoint for Mac 中提供 LaTeXSnipper 公式插件")
+            )
+            startup_layout.addWidget(self.office_addin_button, 1)
         lay.addWidget(startup_row)
         self._sync_startup_action_buttons()
         lay.addSpacing(8)
@@ -293,6 +307,8 @@ class SettingsLayoutMixin:
         self.automation_api_button.clicked.connect(
             self._on_automation_api_button_clicked
         )
+        if self.office_addin_button is not None:
+            self.office_addin_button.clicked.connect(self._on_office_addin_button_clicked)
         self.theme_mode_combo.currentIndexChanged.connect(self._on_theme_mode_changed)
         self.ui_language_combo.currentIndexChanged.connect(self._on_ui_language_changed)
         self.external_apply_preset_btn.clicked.connect(self._apply_external_preset)
@@ -336,6 +352,32 @@ class SettingsLayoutMixin:
         self._init_theme_mode_combo()
         self._init_ui_language_combo()
         self.apply_theme_styles(force=True)
+        self._fit_width_to_content()
+
+    def _fit_width_to_content(self) -> None:
+        """Widen the dialog until no row is clipped.
+
+        Horizontal scrolling is disabled, so a row wider than the viewport
+        (for example the startup buttons, whose labels are longer in English)
+        would be cut off. The width follows the actual fonts and translation.
+        """
+        scroll_area = getattr(self, "scroll_area", None)
+        content = getattr(self, "content_widget", None)
+        if scroll_area is None or content is None:
+            return
+        needed = (
+            content.minimumSizeHint().width()
+            + scroll_area.verticalScrollBar().sizeHint().width()
+            + 2 * scroll_area.frameWidth()
+        )
+        width = max(SETTINGS_MIN_WIDTH, needed)
+        screen = self.screen()
+        if screen is not None:
+            width = min(width, screen.availableGeometry().width())
+        if width > self.minimumWidth():
+            self.setMinimumWidth(width)
+        if self.width() < width:
+            self.resize(width, self.height())
 
     def _to_bool(self, value) -> bool:
         if isinstance(value, bool):
@@ -360,6 +402,14 @@ class SettingsLayoutMixin:
             self.automation_api_button.setText(
                 tr("自动化接口: 开") if enabled else tr("自动化接口: 关")
             )
+        office_addin_button = getattr(self, "office_addin_button", None)
+        if office_addin_button is not None:
+            enabled = bool(office_addin_button.isChecked())
+            office_addin_button.setText(
+                tr("Office 插件: 开") if enabled else tr("Office 插件: 关")
+            )
+        # On/off labels differ in width; keep every button fully visible.
+        self._fit_width_to_content()
 
     def _on_runtime_log_button_clicked(self, _checked: bool):
         enabled = bool(self.runtime_log_button.isChecked())
@@ -403,6 +453,31 @@ class SettingsLayoutMixin:
             raise RuntimeError(tr("自动化接口控制器不可用"))
         except Exception as exc:
             _done(False, str(exc))
+
+    def _on_office_addin_button_clicked(self, _checked: bool):
+        button = self.office_addin_button
+        enabled = bool(button.isChecked())
+        button.setEnabled(False)
+        self._sync_startup_action_buttons()
+        if enabled:
+            self._show_info(
+                tr("Office 插件"),
+                tr("正在启用；首次启用时 macOS 会请求信任本机证书。"),
+                "info",
+            )
+
+        def _done(ok: bool, message: str):
+            button.setEnabled(True)
+            if not ok and enabled:
+                button.setChecked(False)
+            self._sync_startup_action_buttons()
+            self._show_info(
+                tr("Office 插件"),
+                message if ok else tr("启用失败: {message}").format(message=message),
+                "success" if ok else "error",
+            )
+
+        self.context.office_addin.set_enabled_async(enabled, _done)
 
     def _open_automation_access_dialog(self):
         from ui.automation_access_dialog import AutomationAccessDialog

@@ -17,6 +17,7 @@ from runtime.config_manager import ConfigManager
 from runtime.hotkey_config import normalize_hotkey_or_default
 from ui.controllers.app_lifecycle import AppLifecycleController
 from ui.controllers.automation_api import AutomationApiController
+from ui.controllers.office_addin import OfficeAddinController
 from ui.controllers.capture import CaptureController
 from ui.controllers.editor_actions import EditorActionsController
 from ui.controllers.file_drop import FileInputController
@@ -96,6 +97,7 @@ class MainWindow(QMainWindow):
                 cast(ThemeController, self.theme),
                 cast(AppLifecycleController, self.lifecycle),
                 self.automation_api,
+                self.office_addin,
             ),
             self.tasks,
             self.coordinator,
@@ -156,6 +158,7 @@ class MainWindow(QMainWindow):
             quit_application=lambda: self.lifecycle.truly_exit(),
         )
         self.automation_api = AutomationApiController(self.cfg, self.coordinator, self)
+        self.office_addin = OfficeAddinController(self.cfg, self)
         self.lifecycle = AppLifecycleController(
             self,
             self.capture,
@@ -166,6 +169,7 @@ class MainWindow(QMainWindow):
             shutdown_actions=(
                 self.models.cancel_warmup,
                 self.automation_api.shutdown,
+                self.office_addin.shutdown,
                 lambda: self.coordinator.stop(wait=False),
                 self.tasks.shutdown,
                 self.models.shutdown,
@@ -249,6 +253,7 @@ class MainWindow(QMainWindow):
         QTimer.singleShot(
             0, self.automation_api.apply_automation_api_startup_preference
         )
+        QTimer.singleShot(0, self.office_addin.apply_startup_preference)
 
     def showEvent(self, event):
         super().showEvent(event)
