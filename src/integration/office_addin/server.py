@@ -122,9 +122,13 @@ class OfficeAddinServer:
         self.assets.validate()
         context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         context.minimum_version = ssl.TLSVersion.TLSv1_2
-        context.load_cert_chain(str(self.certificate.certificate), str(self.certificate.private_key))
+        context.load_cert_chain(
+            str(self.certificate.certificate), str(self.certificate.private_key)
+        )
         server = _OfficeHTTPServer((self.host, self.port), _OfficeRequestHandler, self)
-        server.socket = context.wrap_socket(server.socket, server_side=True, do_handshake_on_connect=False)
+        server.socket = context.wrap_socket(
+            server.socket, server_side=True, do_handshake_on_connect=False
+        )
         self._server = server
         self._thread = threading.Thread(
             target=server.serve_forever, name="LaTeXSnipper Office add-in", daemon=True
@@ -221,7 +225,9 @@ class _OfficeRequestHandler(BaseHTTPRequestHandler):
         except OfficeApiError as error:
             self._send_error(error)
         except Exception:
-            self._send_error(OfficeApiError(500, "internal_error", "LaTeXSnipper 处理请求失败。"))
+            self._send_error(
+                OfficeApiError(500, "internal_error", "LaTeXSnipper 处理请求失败。")
+            )
 
     def _api(self, method: str, path: str) -> dict[str, Any]:
         if method == "GET" and path == "/api/health":
@@ -300,7 +306,9 @@ class _OfficeRequestHandler(BaseHTTPRequestHandler):
         try:
             payload = json.loads(raw.decode("utf-8"))
         except (UnicodeDecodeError, json.JSONDecodeError):
-            raise OfficeApiError(400, "invalid_request", "请求不是有效的 JSON。") from None
+            raise OfficeApiError(
+                400, "invalid_request", "请求不是有效的 JSON。"
+            ) from None
         if not isinstance(payload, dict):
             raise OfficeApiError(400, "invalid_request", "请求必须是 JSON 对象。")
         return payload
@@ -322,7 +330,9 @@ class _OfficeRequestHandler(BaseHTTPRequestHandler):
         )
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", content_type)
-        self.send_header("Content-Length", str(target.stat().st_size if head else len(data)))
+        self.send_header(
+            "Content-Length", str(target.stat().st_size if head else len(data))
+        )
         self.send_header("Cache-Control", "no-cache")
         self.send_header("X-Content-Type-Options", "nosniff")
         self.end_headers()
@@ -335,11 +345,13 @@ class _OfficeRequestHandler(BaseHTTPRequestHandler):
             return office.assets.typography_adapter
         for prefix, root in office.static_roots().items():
             if path.startswith(prefix):
-                return _safe_child(root, unquote(path[len(prefix):]))
+                return _safe_child(root, unquote(path[len(prefix) :]))
         return None
 
     def _send_json(self, status: HTTPStatus, payload: dict[str, Any]) -> None:
-        raw = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        raw = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode(
+            "utf-8"
+        )
         self.send_response(int(status))
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(raw)))
@@ -360,7 +372,9 @@ class _OfficeRequestHandler(BaseHTTPRequestHandler):
 
 def _safe_child(root: Path, relative: str) -> Path | None:
     parts = [part for part in relative.split("/") if part]
-    if not parts or any(part in {".", ".."} or "\\" in part or "\x00" in part for part in parts):
+    if not parts or any(
+        part in {".", ".."} or "\\" in part or "\x00" in part for part in parts
+    ):
         return None
     base = root.resolve()
     target = base.joinpath(*parts).resolve()
@@ -376,7 +390,11 @@ def _require_string(payload: dict[str, Any], key: str) -> str:
 
 def _require_list(payload: dict[str, Any], key: str) -> list[dict[str, Any]]:
     value = payload.get(key)
-    if not isinstance(value, list) or len(value) > 512 or not all(isinstance(item, dict) for item in value):
+    if (
+        not isinstance(value, list)
+        or len(value) > 512
+        or not all(isinstance(item, dict) for item in value)
+    ):
         raise OfficeApiError(400, "invalid_request", f"字段无效：{key}")
     return value
 

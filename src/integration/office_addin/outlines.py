@@ -16,7 +16,13 @@ from typing import Any
 
 EM = 1000
 REGULAR, BOLD, ITALIC = 0, 1, 2
-FALLBACK_FAMILIES = ("Times New Roman", "PingFang SC", "Songti SC", "Apple Symbols", "Menlo")
+FALLBACK_FAMILIES = (
+    "Times New Roman",
+    "PingFang SC",
+    "Songti SC",
+    "Apple Symbols",
+    "Menlo",
+)
 MAX_RUN_CHARACTERS = 2048
 
 
@@ -33,17 +39,33 @@ class SystemFontOutlines:
 
     def families(self) -> list[str]:
         # Names starting with "." are private macOS UI fonts, not user choices.
-        return sorted({name for name in self._installed().values() if not name.startswith(".")}, key=str.casefold)
+        return sorted(
+            {name for name in self._installed().values() if not name.startswith(".")},
+            key=str.casefold,
+        )
 
     def shape_runs(self, runs: list[dict[str, Any]]) -> dict[str, Any]:
         """Shape adapter runs, keyed by the adapter's opaque run key."""
 
         result: dict[str, Any] = {}
         for run in runs:
-            key, text, family, style = run.get("key"), run.get("text"), run.get("family"), run.get("style")
-            if not isinstance(key, str) or not isinstance(text, str) or not isinstance(family, str):
+            key, text, family, style = (
+                run.get("key"),
+                run.get("text"),
+                run.get("family"),
+                run.get("style"),
+            )
+            if (
+                not isinstance(key, str)
+                or not isinstance(text, str)
+                or not isinstance(family, str)
+            ):
                 raise OutlineError("文字段数据无效。")
-            if isinstance(style, bool) or not isinstance(style, int) or style & ~(BOLD | ITALIC):
+            if (
+                isinstance(style, bool)
+                or not isinstance(style, int)
+                or style & ~(BOLD | ITALIC)
+            ):
                 raise OutlineError("文字段样式无效。")
             result[key] = self.shape(text, family, style)
         return result
@@ -52,7 +74,11 @@ class SystemFontOutlines:
         if len(text) > MAX_RUN_CHARACTERS:
             raise OutlineError("文字段过长。")
         for character in text:
-            if ord(character) < 32 or 0xD800 <= ord(character) <= 0xDFFF or ord(character) > 0xFFFF:
+            if (
+                ord(character) < 32
+                or 0xD800 <= ord(character) <= 0xDFFF
+                or ord(character) > 0xFFFF
+            ):
                 raise OutlineError(
                     "系统字体轮廓暂不支持辅助平面字符或控制字符；请使用受支持的数学字形或显式换行结构。"
                 )
@@ -72,7 +98,9 @@ class SystemFontOutlines:
         if self._families is None:
             from PyQt6.QtGui import QFontDatabase
 
-            self._families = {name.casefold(): name for name in QFontDatabase.families()}
+            self._families = {
+                name.casefold(): name for name in QFontDatabase.families()
+            }
         return self._families
 
     def _shape(self, text: str, requested: str, style: int) -> dict[str, Any]:
@@ -96,7 +124,11 @@ class SystemFontOutlines:
             font.setKerning(True)
             font.setStyleStrategy(QFont.StyleStrategy.NoFontMerging)
             raw = QRawFont.fromFont(font)
-            missing = [f"U+{ord(c):04X}" for c in text if not c.isspace() and not raw.supportsCharacter(c)]
+            missing = [
+                f"U+{ord(c):04X}"
+                for c in text
+                if not c.isspace() and not raw.supportsCharacter(c)
+            ]
             if missing:
                 failures.append(f"{name}：缺少 {' '.join(missing)}")
                 continue
@@ -105,7 +137,9 @@ class SystemFontOutlines:
         raise OutlineError("无法为文字段选择字体：" + "；".join(failures))
 
 
-def _outline(font, text: str, requested: str, actual: str, style: int, warning: str | None) -> dict[str, Any]:
+def _outline(
+    font, text: str, requested: str, actual: str, style: int, warning: str | None
+) -> dict[str, Any]:
     from PyQt6.QtCore import QPointF
     from PyQt6.QtGui import QFontMetricsF, QPainterPath, QTransform
 
@@ -115,11 +149,22 @@ def _outline(font, text: str, requested: str, actual: str, style: int, warning: 
         path.addText(QPointF(0, 0), font, text)
     path = QTransform.fromScale(1, -1).map(path)
     base = {
-        "Text": text, "RequestedFamily": requested, "ActualFamily": actual, "Style": style,
-        "Advance": advance, "Warning": warning,
+        "Text": text,
+        "RequestedFamily": requested,
+        "ActualFamily": actual,
+        "Style": style,
+        "Advance": advance,
+        "Warning": warning,
     }
     if path.elementCount() == 0:
-        return {**base, "Height": 0.0, "Depth": 0.0, "Left": 0.0, "Right": 0.0, "Path": ""}
+        return {
+            **base,
+            "Height": 0.0,
+            "Depth": 0.0,
+            "Left": 0.0,
+            "Right": 0.0,
+            "Path": "",
+        }
     bounds = path.boundingRect()
     return {
         **base,

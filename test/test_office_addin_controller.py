@@ -44,7 +44,9 @@ def fakes(monkeypatch):
         return SimpleNamespace(server=FakeServer(), manifests=[], trusted_now=False)
 
     monkeypatch.setattr(host, "enable", enable)
-    monkeypatch.setattr(host, "disable", lambda server, **_: calls["disable"].append(server))
+    monkeypatch.setattr(
+        host, "disable", lambda server, **_: calls["disable"].append(server)
+    )
     monkeypatch.setattr(office_addin, "office_addin_supported", lambda: True)
     monkeypatch.setattr("runtime.product_version.read_product_version", lambda: "3.3.0")
     return calls, state
@@ -66,7 +68,9 @@ def test_enable_starts_server_and_remembers_preference(app, fakes):
     cfg = Config()
     controller = OfficeAddinController(cfg)
     results = []
-    controller.set_enabled_async(True, lambda ok, message: results.append((ok, message)))
+    controller.set_enabled_async(
+        True, lambda ok, message: results.append((ok, message))
+    )
     wait_for(results)
     assert results[0][0] is True
     assert controller.is_running()
@@ -80,7 +84,9 @@ def test_failed_enable_reports_error_and_clears_preference(app, fakes):
     cfg = Config()
     controller = OfficeAddinController(cfg)
     results = []
-    controller.set_enabled_async(True, lambda ok, message: results.append((ok, message)))
+    controller.set_enabled_async(
+        True, lambda ok, message: results.append((ok, message))
+    )
     wait_for(results)
     assert results == [(False, "端口被占用")]
     assert not controller.is_running()
@@ -108,8 +114,12 @@ def test_disabling_while_starting_does_not_leave_a_server(app, fakes):
     cfg = Config()
     controller = OfficeAddinController(cfg)
     results = []
-    controller.set_enabled_async(True, lambda ok, message: results.append(("enable", ok)))
-    controller.set_enabled_async(False, lambda ok, message: results.append(("disable", ok)))
+    controller.set_enabled_async(
+        True, lambda ok, message: results.append(("enable", ok))
+    )
+    controller.set_enabled_async(
+        False, lambda ok, message: results.append(("disable", ok))
+    )
     wait_for(results, 2)
     assert ("enable", False) in results
     assert not controller.is_running()

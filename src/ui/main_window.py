@@ -17,13 +17,13 @@ from runtime.config_manager import ConfigManager
 from runtime.hotkey_config import normalize_hotkey_or_default
 from ui.controllers.app_lifecycle import AppLifecycleController
 from ui.controllers.automation_api import AutomationApiController
-from ui.controllers.office_addin import OfficeAddinController
 from ui.controllers.capture import CaptureController
 from ui.controllers.editor_actions import EditorActionsController
 from ui.controllers.file_drop import FileInputController
 from ui.controllers.history import HistoryController
 from ui.controllers.hotkey import HotkeyController
 from ui.controllers.model_runtime import ModelRuntimeController
+from ui.controllers.office_addin import OfficeAddinController
 from ui.controllers.onboarding import OnboardingController
 from ui.controllers.pdf import PdfRecognitionController
 from ui.controllers.predict_result import RecognitionResultController

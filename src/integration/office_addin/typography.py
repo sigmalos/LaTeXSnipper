@@ -46,14 +46,48 @@ MATH_STYLES = (
 MATH_STYLE_IDS = tuple(style[0] for style in MATH_STYLES)
 
 NAMED_SIZES = {
-    "初号": 42, "小初": 36, "一号": 26, "小一": 24,
-    "二号": 22, "小二": 18, "三号": 16, "小三": 15,
-    "四号": 14, "小四": 12, "五号": 10.5, "小五": 9,
-    "六号": 7.5, "小六": 6.5, "七号": 5.5, "八号": 5,
+    "初号": 42,
+    "小初": 36,
+    "一号": 26,
+    "小一": 24,
+    "二号": 22,
+    "小二": 18,
+    "三号": 16,
+    "小三": 15,
+    "四号": 14,
+    "小四": 12,
+    "五号": 10.5,
+    "小五": 9,
+    "六号": 7.5,
+    "小六": 6.5,
+    "七号": 5.5,
+    "八号": 5,
 }
 COMMON_POINT_SIZES = (
-    5, 5.5, 6.5, 7.5, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16,
-    18, 20, 22, 24, 26, 28, 36, 42, 48, 72,
+    5,
+    5.5,
+    6.5,
+    7.5,
+    8,
+    9,
+    10,
+    10.5,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    18,
+    20,
+    22,
+    24,
+    26,
+    28,
+    36,
+    42,
+    48,
+    72,
 )
 
 # A fixed list, shown in this order and never probed, like the Windows list.
@@ -104,14 +138,20 @@ class Typography:
     color: str = "#000000"
 
     def __post_init__(self) -> None:
-        if not isinstance(self.symbol_font_id, str) or not _SYMBOL_FONT.match(self.symbol_font_id):
+        if not isinstance(self.symbol_font_id, str) or not _SYMBOL_FONT.match(
+            self.symbol_font_id
+        ):
             raise TypographyError("数学字体必须使用稳定的字体方案 ID。")
         if self.default_math_style not in MATH_STYLE_IDS:
             raise TypographyError("无效的数学样式。")
         object.__setattr__(self, "cjk_font_family", _family(self.cjk_font_family))
         if self.number_font_family is not None:
-            object.__setattr__(self, "number_font_family", _family(self.number_font_family))
-        object.__setattr__(self, "font_size_points", validate_points(self.font_size_points))
+            object.__setattr__(
+                self, "number_font_family", _family(self.number_font_family)
+            )
+        object.__setattr__(
+            self, "font_size_points", validate_points(self.font_size_points)
+        )
         if not isinstance(self.color, str) or not _COLOR.match(self.color):
             raise TypographyError("颜色必须为 #RRGGBB 格式。")
         object.__setattr__(self, "color", self.color.upper())
@@ -177,7 +217,9 @@ def validate_points(points: Any) -> float:
         raise TypographyError("公式字号无效。")
     value = float(points)
     if not MINIMUM_POINTS <= value <= MAXIMUM_POINTS:
-        raise TypographyError(f"公式字号必须在 {MINIMUM_POINTS:g}–{MAXIMUM_POINTS:g} pt 之间。")
+        raise TypographyError(
+            f"公式字号必须在 {MINIMUM_POINTS:g}–{MAXIMUM_POINTS:g} pt 之间。"
+        )
     return value
 
 
@@ -254,7 +296,9 @@ class SettingsStore:
 
     def _validate(self, defaults: HostDefaults) -> None:
         if defaults.typography.symbol_font_id not in self.symbol_fonts:
-            raise TypographyError("预设使用未打包的数学符号字体：" + defaults.typography.symbol_font_id)
+            raise TypographyError(
+                "预设使用未打包的数学符号字体：" + defaults.typography.symbol_font_id
+            )
 
     def _read(self) -> dict[str, tuple[HostDefaults, str]]:
         try:
@@ -288,7 +332,9 @@ class SettingsStore:
         for host, (defaults, backend) in settings.items():
             payload[host] = {**defaults.to_preset(), "insertionBackend": backend}
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        descriptor, temporary = tempfile.mkstemp(prefix=".settings-", dir=self.path.parent)
+        descriptor, temporary = tempfile.mkstemp(
+            prefix=".settings-", dir=self.path.parent
+        )
         try:
             with os.fdopen(descriptor, "w", encoding="utf-8") as stream:
                 json.dump(payload, stream, ensure_ascii=False, indent=2)

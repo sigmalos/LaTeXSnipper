@@ -288,7 +288,7 @@ Open System Settings -&gt; Privacy &amp; Security -&gt; Screen &amp; System Audi
       <translation>MathCraft cache</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="86" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="85" />
       <source>MathCraft 识别类型:</source>
       <translation>MathCraft recognition type:</translation>
     </message>
@@ -298,12 +298,12 @@ Open System Settings -&gt; Privacy &amp; Security -&gt; Screen &amp; System Audi
       <translation>Whether MathJax resources exist</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="157" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="156" />
       <source>MinerU Local 健康检查路径（例如 /health）</source>
       <translation>MinerU Local health-check path (for example, /health)</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="151" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="150" />
       <source>MinerU Local 解析接口路径（例如 /file_parse）</source>
       <translation>MinerU Local parsing endpoint path (for example, /file_parse)</translation>
     </message>
@@ -318,45 +318,45 @@ Open System Settings -&gt; Privacy &amp; Security -&gt; Screen &amp; System Audi
       <translation>The MinerU parsing task failed. Check the model configuration and service log.</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="260" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="464" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="475" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="263" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="472" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="483" />
       <source>Office 插件</source>
       <translation>Office Add-in</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="409" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="417" />
       <source>Office 插件: 关</source>
       <translation>Office Add-in: Off</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="409" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="417" />
       <source>Office 插件: 开</source>
       <translation>Office Add-in: On</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/controllers/office_addin.py" line="115" />
+      <location filename="../../../src/ui/controllers/office_addin.py" line="126" />
       <source>Office 插件仅支持 macOS。</source>
       <translation>The Office add-in is available on macOS only.</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/controllers/office_addin.py" line="77" />
+      <location filename="../../../src/ui/controllers/office_addin.py" line="85" />
       <source>Office 插件启动失败，请查看运行日志。</source>
       <translation>The Office add-in failed to start. Check the runtime log.</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/controllers/office_addin.py" line="106" />
-      <location filename="../../../src/ui/controllers/office_addin.py" line="150" />
+      <location filename="../../../src/ui/controllers/office_addin.py" line="116" />
+      <location filename="../../../src/ui/controllers/office_addin.py" line="162" />
       <source>Office 插件已关闭</source>
       <translation>Office add-in is off</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/controllers/office_addin.py" line="105" />
+      <location filename="../../../src/ui/controllers/office_addin.py" line="115" />
       <source>Office 插件已启用，但当前未运行</source>
       <translation>Office add-in is enabled but not running</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/controllers/office_addin.py" line="103" />
+      <location filename="../../../src/ui/controllers/office_addin.py" line="111" />
       <source>Office 插件已就绪：重新打开 Word 或 PowerPoint 后，在“开始 › 加载项”中选择 LaTeXSnipper。</source>
       <translation>Office add-in is ready: reopen Word or PowerPoint, then choose LaTeXSnipper from Home › Add-ins.</translation>
     </message>
@@ -545,7 +545,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Download update</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="107" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="106" />
       <source>不使用预设</source>
       <translation>No preset</translation>
     </message>
@@ -684,7 +684,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Erase the touched stroke segments at pixel level while preserving the rest</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="255" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="254" />
       <source>允许 Office 插件、本机自动化工具及已授权远程设备调用 LaTeXSnipper</source>
       <translation>Allow the Office add-in, local automation tools, and authorized remote devices to use LaTeXSnipper</translation>
     </message>
@@ -716,12 +716,12 @@ Retry with the {hotkey} shortcut.</translation>
     <message>
       <location filename="../../../src/preview/smart_preview.py" line="162" />
       <location filename="../../../src/ui/favorites_window.py" line="267" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="89" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="88" />
       <source>公式</source>
       <translation>Formula</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="168" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="167" />
       <source>公式 OCR</source>
       <translation>Formula OCR</translation>
     </message>
@@ -824,7 +824,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Content block rendering failed: {error}</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="501" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="509" />
       <source>内置 MathCraft OCR，支持公式、混合、文字与 PDF 文档识别。</source>
       <translation>Built-in MathCraft OCR for formulas, mixed content, text, and PDF documents.</translation>
     </message>
@@ -834,7 +834,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>The built-in PDF recognizer requires a rendering DPI</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="72" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="71" />
       <source>内置模型</source>
       <translation>Built-in model</translation>
     </message>
@@ -878,7 +878,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Loading interface components...</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="118" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="117" />
       <source>协议:</source>
       <translation>Protocol:</translation>
     </message>
@@ -932,18 +932,18 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Optional: model name (usually blank for MinerU Local)</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="241" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="240" />
       <source>启动后显示运行日志窗口</source>
       <translation>Show the runtime log window after startup</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="227" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="226" />
       <source>启动行为:</source>
       <translation>Startup behavior:</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="439" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="476" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="447" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="484" />
       <source>启用失败: {message}</source>
       <translation>Failed to enable: {message}</translation>
     </message>
@@ -1014,7 +1014,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Lasso Correction</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="265" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="271" />
       <source>在 Word 和 PowerPoint for Mac 中提供 LaTeXSnipper 公式插件</source>
       <translation>Provide the LaTeXSnipper formula add-in in Word and PowerPoint for Mac</translation>
     </message>
@@ -1072,13 +1072,13 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Copy access key</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="212" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="211" />
       <source>外观主题:</source>
       <translation>Theme:</translation>
     </message>
     <message>
       <location filename="../../../src/ui/controllers/model_runtime.py" line="363" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="73" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="72" />
       <source>外部模型</source>
       <translation>External model</translation>
     </message>
@@ -1490,7 +1490,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Application</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="282" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="288" />
       <location filename="../../../src/update/update_dialog.py" line="29" />
       <source>应用更新</source>
       <translation>App updates</translation>
@@ -1502,7 +1502,7 @@ Retry with the {hotkey} shortcut.</translation>
     </message>
     <message>
       <location filename="../../../src/ui/resource_diagnostics.py" line="25" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="290" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="296" />
       <source>应用诊断</source>
       <translation>App diagnostics</translation>
     </message>
@@ -1513,7 +1513,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>App shutdown is unavailable. Installation has not started.</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="111" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="110" />
       <source>应用预设</source>
       <translation>Apply preset</translation>
     </message>
@@ -1654,13 +1654,13 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Load when recognition starts</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="130" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="129" />
       <source>必填：Base URL，例如本地 http://127.0.0.1:11434 或线上 https://api.example.com</source>
       <translation>Required: Base URL, such as local http://127.0.0.1:11434 or hosted https://api.example.com</translation>
     </message>
     <message>
       <location filename="../../../src/ui/settings_external_model_mixin.py" line="116" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="138" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="137" />
       <source>必填：模型名，例如 qwen2.5vl:7b；必须与服务中的真实名称一致</source>
       <translation>Required: model name, such as qwen2.5vl:7b; it must match the name exposed by the service</translation>
     </message>
@@ -1848,7 +1848,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Recommended</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="104" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="103" />
       <source>推荐预设:</source>
       <translation>Recommended preset:</translation>
     </message>
@@ -1870,7 +1870,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Notice</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="164" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="163" />
       <source>提示词模板:</source>
       <translation>Prompt template:</translation>
     </message>
@@ -2158,12 +2158,12 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>View logs</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="295" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="301" />
       <source>查看桌面端实际使用的模型权重目录</source>
       <translation>View the model weight directories used by the desktop app</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="193" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="192" />
       <source>查看说明</source>
       <translation>View Help</translation>
     </message>
@@ -2212,7 +2212,7 @@ Retry with the {hotkey} shortcut.</translation>
     </message>
     <message>
       <location filename="../../../src/ui/model_resources_dialog.py" line="28" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="293" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="299" />
       <source>模型资源</source>
       <translation>Model resources</translation>
     </message>
@@ -2312,7 +2312,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Starting...</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="465" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="473" />
       <source>正在启用；首次启用时 macOS 会请求信任本机证书。</source>
       <translation>Enabling. The first time, macOS asks you to trust a local certificate.</translation>
     </message>
@@ -2414,7 +2414,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>No recognizable content</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="216" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="215" />
       <location filename="../../../src/ui/settings_theme_mixin.py" line="51" />
       <source>浅色</source>
       <translation>Light</translation>
@@ -2441,7 +2441,7 @@ Retry with the {hotkey} shortcut.</translation>
     </message>
     <message>
       <location filename="../../../src/ui/settings_external_model_mixin.py" line="207" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="189" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="188" />
       <source>测试连接</source>
       <translation>Test Connection</translation>
     </message>
@@ -2451,7 +2451,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Allowed browser origins</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="217" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="216" />
       <location filename="../../../src/ui/settings_theme_mixin.py" line="51" />
       <source>深色</source>
       <translation>Dark</translation>
@@ -2459,7 +2459,7 @@ Retry with the {hotkey} shortcut.</translation>
     <message>
       <location filename="../../../src/preview/smart_preview.py" line="164" />
       <location filename="../../../src/ui/favorites_window.py" line="269" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="90" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="89" />
       <source>混合</source>
       <translation>Mixed</translation>
     </message>
@@ -2545,7 +2545,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>The canvas is empty</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="219" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="218" />
       <source>界面语言:</source>
       <translation>Language:</translation>
     </message>
@@ -2639,7 +2639,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Port</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="223" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="222" />
       <source>简体中文</source>
       <translation>Simplified Chinese</translation>
     </message>
@@ -2649,7 +2649,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Paste</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="91" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="90" />
       <source>纯文字</source>
       <translation>Text only</translation>
     </message>
@@ -2659,7 +2659,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Plain text (.txt)</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="170" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="169" />
       <source>纯文本 OCR</source>
       <translation>Plain-text OCR</translation>
     </message>
@@ -2732,19 +2732,19 @@ Retry with the {hotkey} shortcut.</translation>
       <location filename="../../../src/ui/automation_access_dialog.py" line="75" />
       <location filename="../../../src/ui/automation_access_dialog.py" line="101" />
       <location filename="../../../src/ui/automation_access_dialog.py" line="441" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="244" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="444" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="438" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="243" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="452" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="446" />
       <source>自动化接口</source>
       <translation>Automation API</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="403" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="411" />
       <source>自动化接口: 关</source>
       <translation>Automation API: Off</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="403" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="411" />
       <source>自动化接口: 开</source>
       <translation>Automation API: On</translation>
     </message>
@@ -2754,7 +2754,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Automation API failed to start</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="453" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="461" />
       <source>自动化接口控制器不可用</source>
       <translation>The Automation API controller is unavailable</translation>
     </message>
@@ -2769,7 +2769,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Automatically select a display</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="181" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="180" />
       <source>自定义提示词（覆盖图片、截图、手写及 OpenAI/Ollama PDF 模板）</source>
       <translation>Custom prompt (overrides image, capture, handwriting, and OpenAI/Ollama PDF templates)</translation>
     </message>
@@ -2785,7 +2785,7 @@ Retry with the {hotkey} shortcut.</translation>
     </message>
     <message>
       <location filename="../../../src/ui/main_window_layout.py" line="62" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="46" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="45" />
       <source>设置</source>
       <translation>Settings</translation>
     </message>
@@ -2798,12 +2798,12 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Settings...</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="425" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="433" />
       <source>设置已保存</source>
       <translation>Settings saved</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="444" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="452" />
       <source>设置已更新</source>
       <translation>Settings updated</translation>
     </message>
@@ -2819,7 +2819,7 @@ Retry with the {hotkey} shortcut.</translation>
     </message>
     <message>
       <location filename="../../../src/ui/automation_access_dialog.py" line="116" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="276" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="282" />
       <source>访问范围</source>
       <translation>Access Scope</translation>
     </message>
@@ -2850,7 +2850,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Too many recognition tasks. Retry later.</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="68" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="67" />
       <source>识别后端:</source>
       <translation>Recognition backend:</translation>
     </message>
@@ -3063,13 +3063,13 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>The first page cannot be greater than the last page.</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="172" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="171" />
       <source>超时(秒):</source>
       <translation>Timeout (seconds):</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="215" />
-      <location filename="../../../src/ui/settings_layout_builder.py" line="222" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="214" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="221" />
       <location filename="../../../src/ui/settings_theme_mixin.py" line="51" />
       <source>跟随系统</source>
       <translation>Follow system</translation>
@@ -3087,22 +3087,22 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Enter a formula name:</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="232" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="231" />
       <source>运行日志</source>
       <translation>Runtime Log</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="395" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="403" />
       <source>运行日志: 关</source>
       <translation>Runtime Log: Off</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="395" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="403" />
       <source>运行日志: 开</source>
       <translation>Runtime Log: On</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="425" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="433" />
       <source>运行日志显示偏好已更新</source>
       <translation>Runtime log display preference updated</translation>
     </message>
@@ -3152,7 +3152,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Remote access revoked</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="504" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="512" />
       <source>连接多模态 OCR / VLM 接口，支持本地服务和部分线上服务。</source>
       <translation>Connect to multimodal OCR/VLM APIs hosted locally or by supported online services.</translation>
     </message>
@@ -3204,7 +3204,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Supported Services</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="144" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="143" />
       <source>选填：API Key。本地加密保存，线上接口通常必填</source>
       <translation>Optional: API key. It is encrypted locally and usually required by hosted services</translation>
     </message>
@@ -3246,7 +3246,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>Select Page</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="279" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="285" />
       <source>配置 Automation API 的本机或远程访问范围</source>
       <translation>Configure local or remote access to the Automation API</translation>
     </message>
@@ -3384,7 +3384,7 @@ Retry with the {hotkey} shortcut.</translation>
       <translation>High DPI: scanned document</translation>
     </message>
     <message>
-      <location filename="../../../src/ui/settings_layout_builder.py" line="271" />
+      <location filename="../../../src/ui/settings_layout_builder.py" line="277" />
       <source>高级设置:</source>
       <translation>Advanced settings:</translation>
     </message>

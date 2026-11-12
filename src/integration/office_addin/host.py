@@ -66,7 +66,9 @@ def enable(
             certificate.trust(identity)
             trusted_now = True
         if not certificate.is_trusted(identity):
-            raise OfficeAddinError("macOS 未信任 Office 加载项证书，Office 将无法加载插件页面。")
+            raise OfficeAddinError(
+                "macOS 未信任 Office 加载项证书，Office 将无法加载插件页面。"
+            )
     except certificate.CertificateError as error:
         raise OfficeAddinError(f"无法设置 Office 加载项证书：{error}") from None
 
@@ -78,11 +80,15 @@ def enable(
         files=files,
         mathjax_version=mathjax_version(assets.mathjax),
     )
-    server = OfficeAddinServer(assets=assets, certificate=identity, services=services, port=port)
+    server = OfficeAddinServer(
+        assets=assets, certificate=identity, services=services, port=port
+    )
     try:
         server.start()
     except OSError as error:
-        raise OfficeAddinError(f"无法监听 127.0.0.1:{port}，端口可能已被占用。") from error
+        raise OfficeAddinError(
+            f"无法监听 127.0.0.1:{port}，端口可能已被占用。"
+        ) from error
     try:
         manifest = sideload.render_manifest(
             assets.manifest_template.read_text(encoding="utf-8"),

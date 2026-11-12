@@ -56,7 +56,9 @@ def source_assets(repository: Path, mathjax: Path) -> OfficeAddinAssets:
     return OfficeAddinAssets(
         web=plugin / "macos/web",
         shared_editor=plugin / "src/LaTeXSnipper.OfficePlugin.Editor/EditorAssets",
-        typography_adapter=plugin / "src/LaTeXSnipper.OfficePlugin.Rendering" / TYPOGRAPHY_ADAPTER,
+        typography_adapter=plugin
+        / "src/LaTeXSnipper.OfficePlugin.Rendering"
+        / TYPOGRAPHY_ADAPTER,
         manifest_template=plugin / "macos" / MANIFEST_TEMPLATE,
         mathjax=mathjax,
         # Help-page images shared with the Windows plugin.

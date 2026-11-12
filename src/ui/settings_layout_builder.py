@@ -17,7 +17,6 @@ from localization.manager import translate as tr
 from ui.controllers.office_addin import office_addin_supported
 from update.update_dialog import check_update_dialog
 
-
 SETTINGS_MIN_WIDTH = 420
 
 
@@ -256,11 +255,18 @@ class SettingsLayoutMixin:
         )
         startup_layout.addWidget(self.automation_api_button, 1)
         self.office_addin_button = None
-        if getattr(self.context, "office_addin", None) is not None and office_addin_supported():
-            self.office_addin_button = PushButton(FluentIcon.DOCUMENT, tr("Office 插件"))
+        if (
+            getattr(self.context, "office_addin", None) is not None
+            and office_addin_supported()
+        ):
+            self.office_addin_button = PushButton(
+                FluentIcon.DOCUMENT, tr("Office 插件")
+            )
             self.office_addin_button.setFixedHeight(36)
             self.office_addin_button.setCheckable(True)
-            self.office_addin_button.setChecked(self.context.office_addin.enabled_preference())
+            self.office_addin_button.setChecked(
+                self.context.office_addin.enabled_preference()
+            )
             self.office_addin_button.setToolTip(
                 tr("在 Word 和 PowerPoint for Mac 中提供 LaTeXSnipper 公式插件")
             )
@@ -308,7 +314,9 @@ class SettingsLayoutMixin:
             self._on_automation_api_button_clicked
         )
         if self.office_addin_button is not None:
-            self.office_addin_button.clicked.connect(self._on_office_addin_button_clicked)
+            self.office_addin_button.clicked.connect(
+                self._on_office_addin_button_clicked
+            )
         self.theme_mode_combo.currentIndexChanged.connect(self._on_theme_mode_changed)
         self.ui_language_combo.currentIndexChanged.connect(self._on_ui_language_changed)
         self.external_apply_preset_btn.clicked.connect(self._apply_external_preset)

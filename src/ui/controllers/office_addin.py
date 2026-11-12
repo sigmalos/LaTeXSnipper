@@ -46,11 +46,19 @@ class QtFileChooser(QObject):
         result, done = reply
         try:
             filters = tr("JSON 预设 (*.json)")
-            start = str(Path.home() / "Documents" / suggested) if suggested else str(Path.home() / "Documents")
+            start = (
+                str(Path.home() / "Documents" / suggested)
+                if suggested
+                else str(Path.home() / "Documents")
+            )
             if mode == "open":
-                name, _ = QFileDialog.getOpenFileName(self._parent, title, start, filters)
+                name, _ = QFileDialog.getOpenFileName(
+                    self._parent, title, start, filters
+                )
             else:
-                name, _ = QFileDialog.getSaveFileName(self._parent, title, start, filters)
+                name, _ = QFileDialog.getSaveFileName(
+                    self._parent, title, start, filters
+                )
                 if name and not name.lower().endswith(".json"):
                     name += ".json"
             result["path"] = Path(name) if name else None
@@ -100,7 +108,9 @@ class OfficeAddinController(QObject):
 
     def status_text(self) -> str:
         if self._server is not None:
-            return tr("Office 插件已就绪：重新打开 Word 或 PowerPoint 后，在“开始 › 加载项”中选择 LaTeXSnipper。")
+            return tr(
+                "Office 插件已就绪：重新打开 Word 或 PowerPoint 后，在“开始 › 加载项”中选择 LaTeXSnipper。"
+            )
         if self.enabled_preference():
             return tr("Office 插件已启用，但当前未运行")
         return tr("Office 插件已关闭")
@@ -112,7 +122,9 @@ class OfficeAddinController(QObject):
     def set_enabled_async(self, enabled: bool, callback=None) -> None:
         if not office_addin_supported():
             if callback:
-                QTimer.singleShot(0, lambda: callback(False, tr("Office 插件仅支持 macOS。")))
+                QTimer.singleShot(
+                    0, lambda: callback(False, tr("Office 插件仅支持 macOS。"))
+                )
             return
         self.cfg.set(OFFICE_ADDIN_ENABLED_KEY, bool(enabled))
         if enabled:

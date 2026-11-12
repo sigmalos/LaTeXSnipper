@@ -42,8 +42,10 @@ def apply_typography(omml: str, typography: Typography) -> str:
         is_text = normal is not None and value not in {"0", "false"}
         is_number = not is_text and bool(_NUMBER.match(text))
         family = (
-            "Times New Roman" if is_text
-            else typography.number_font_family if is_number and typography.number_font_family
+            "Times New Roman"
+            if is_text
+            else typography.number_font_family
+            if is_number and typography.number_font_family
             else symbol
         )
         properties = run.find(f"{{{WORD}}}rPr")

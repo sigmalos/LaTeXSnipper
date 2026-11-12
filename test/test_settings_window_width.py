@@ -48,7 +48,11 @@ def open_settings(monkeypatch, *, office_addin: bool, english: bool):
 
 
 def startup_buttons(window):
-    buttons = [window.runtime_log_button, window.automation_api_button, window.office_addin_button]
+    buttons = [
+        window.runtime_log_button,
+        window.automation_api_button,
+        window.office_addin_button,
+    ]
     return [button for button in buttons if button is not None]
 
 

@@ -21,7 +21,9 @@ OFFICE_HOSTS = {
 
 
 def wef_directory(bundle_id: str, home: Path | None = None) -> Path:
-    return (home or Path.home()) / "Library/Containers" / bundle_id / "Data/Documents/wef"
+    return (
+        (home or Path.home()) / "Library/Containers" / bundle_id / "Data/Documents/wef"
+    )
 
 
 def manifest_version(product_version: str) -> str:

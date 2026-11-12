@@ -60,7 +60,9 @@ class LocalCertificate:
         return hashlib.sha1(der, usedforsecurity=False).hexdigest().upper()
 
     def expires_at(self) -> datetime:
-        output = _run([OPENSSL, "x509", "-noout", "-enddate", "-in", str(self.certificate)])
+        output = _run(
+            [OPENSSL, "x509", "-noout", "-enddate", "-in", str(self.certificate)]
+        )
         value = output.strip().partition("=")[2]
         try:
             parsed = datetime.strptime(value, "%b %d %H:%M:%S %Y %Z")
@@ -93,7 +95,9 @@ def ensure_certificate(directory: Path) -> tuple[LocalCertificate, bool]:
     if not identity.needs_renewal():
         return identity, False
     ensure_private_directory(directory)
-    with tempfile.TemporaryDirectory(prefix=".office-cert-", dir=directory) as temporary:
+    with tempfile.TemporaryDirectory(
+        prefix=".office-cert-", dir=directory
+    ) as temporary:
         work = Path(temporary)
         config = work / "openssl.cnf"
         config.write_text(_OPENSSL_CONFIG, encoding="utf-8")
@@ -101,9 +105,21 @@ def ensure_certificate(directory: Path) -> tuple[LocalCertificate, bool]:
         cert = work / "localhost.crt"
         _run(
             [
-                OPENSSL, "req", "-x509", "-newkey", "rsa:2048", "-nodes", "-sha256",
-                "-days", str(VALIDITY_DAYS), "-config", str(config),
-                "-keyout", str(key), "-out", str(cert),
+                OPENSSL,
+                "req",
+                "-x509",
+                "-newkey",
+                "rsa:2048",
+                "-nodes",
+                "-sha256",
+                "-days",
+                str(VALIDITY_DAYS),
+                "-config",
+                str(config),
+                "-keyout",
+                str(key),
+                "-out",
+                str(cert),
             ]
         )
         os.chmod(key, 0o600)
@@ -120,8 +136,18 @@ def is_trusted(identity: LocalCertificate) -> bool:
         return False
     try:
         _run(
-            [SECURITY, "verify-cert", "-c", str(identity.certificate), "-p", "ssl",
-             "-s", "localhost", "-L", "-q"]
+            [
+                SECURITY,
+                "verify-cert",
+                "-c",
+                str(identity.certificate),
+                "-p",
+                "ssl",
+                "-s",
+                "localhost",
+                "-L",
+                "-q",
+            ]
         )
     except CertificateError:
         return False
@@ -134,8 +160,17 @@ def trust(identity: LocalCertificate) -> None:
     if not identity.exists():
         raise CertificateError("Office 加载项证书不存在。")
     _run(
-        [SECURITY, "add-trusted-cert", "-r", "trustRoot", "-p", "ssl",
-         "-k", str(_login_keychain()), str(identity.certificate)],
+        [
+            SECURITY,
+            "add-trusted-cert",
+            "-r",
+            "trustRoot",
+            "-p",
+            "ssl",
+            "-k",
+            str(_login_keychain()),
+            str(identity.certificate),
+        ],
         timeout=300,
     )
 
@@ -151,8 +186,13 @@ def untrust(identity: LocalCertificate) -> None:
         pass
     try:
         _run(
-            [SECURITY, "delete-certificate", "-Z", identity.sha1_fingerprint(),
-             str(_login_keychain())]
+            [
+                SECURITY,
+                "delete-certificate",
+                "-Z",
+                identity.sha1_fingerprint(),
+                str(_login_keychain()),
+            ]
         )
     except CertificateError:
         pass
@@ -165,8 +205,13 @@ def _login_keychain() -> Path:
 def _run(command: list[str], *, timeout: float = 60) -> str:
     try:
         completed = subprocess.run(
-            command, capture_output=True, text=True, encoding="utf-8", errors="replace",
-            timeout=timeout, check=False,
+            command,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=timeout,
+            check=False,
         )
     except (OSError, subprocess.TimeoutExpired) as error:
         raise CertificateError(f"无法执行 {Path(command[0]).name}。") from error

@@ -17,8 +17,12 @@ from urllib.parse import quote, urlsplit
 
 from integration.automation.connection_info import default_connection_file
 
-DESKTOP_UNAVAILABLE = "无法连接到 LaTeXSnipper 识别服务。请在桌面端“设置”中开启“自动化接口”，然后重试。"
-CONNECTION_INFO_INVALID = "LaTeXSnipper 连接信息无效。请在桌面端关闭并重新开启“自动化接口”，然后重试。"
+DESKTOP_UNAVAILABLE = (
+    "无法连接到 LaTeXSnipper 识别服务。请在桌面端“设置”中开启“自动化接口”，然后重试。"
+)
+CONNECTION_INFO_INVALID = (
+    "LaTeXSnipper 连接信息无效。请在桌面端关闭并重新开启“自动化接口”，然后重试。"
+)
 REQUEST_TIMEOUT = "LaTeXSnipper 响应超时，请确认桌面端仍在运行，然后重试。"
 INVALID_RESPONSE = "LaTeXSnipper 返回了无法识别的数据，请重启桌面端后再试。"
 RECOGNITION_FAILED = "截图识别未能完成，请重试。"
@@ -82,15 +86,20 @@ class AutomationRelay:
 
     def next_result(self, timeout: int) -> dict[str, Any]:
         return self._request(
-            "POST", "api/v1/recognition/jobs",
+            "POST",
+            "api/v1/recognition/jobs",
             {"input": {"type": "next_result"}, "timeout": int(timeout)},
         )
 
     def job(self, job_id: str) -> dict[str, Any]:
-        return self._with_job_messages(self._request("GET", f"api/v1/recognition/jobs/{quote(job_id, safe='')}"))
+        return self._with_job_messages(
+            self._request("GET", f"api/v1/recognition/jobs/{quote(job_id, safe='')}")
+        )
 
     def cancel(self, job_id: str) -> dict[str, Any]:
-        return self._request("DELETE", f"api/v1/recognition/jobs/{quote(job_id, safe='')}")
+        return self._request(
+            "DELETE", f"api/v1/recognition/jobs/{quote(job_id, safe='')}"
+        )
 
     def _with_job_messages(self, payload: dict[str, Any]) -> dict[str, Any]:
         job = payload.get("job")
@@ -102,19 +111,33 @@ class AutomationRelay:
         try:
             data = json.loads(self.connection_file.read_text(encoding="utf-8"))
         except FileNotFoundError:
-            raise RecognitionRelayError(503, "desktop_unavailable", DESKTOP_UNAVAILABLE) from None
+            raise RecognitionRelayError(
+                503, "desktop_unavailable", DESKTOP_UNAVAILABLE
+            ) from None
         except (OSError, ValueError):
-            raise RecognitionRelayError(503, "connection_invalid", CONNECTION_INFO_INVALID) from None
+            raise RecognitionRelayError(
+                503, "connection_invalid", CONNECTION_INFO_INVALID
+            ) from None
         base_url, token = data.get("base_url"), data.get("token")
         if not isinstance(base_url, str) or not isinstance(token, str) or not token:
-            raise RecognitionRelayError(503, "connection_invalid", CONNECTION_INFO_INVALID)
+            raise RecognitionRelayError(
+                503, "connection_invalid", CONNECTION_INFO_INVALID
+            )
         parts = urlsplit(base_url)
         # The relay only ever talks to the loopback service the desktop announced.
-        if parts.scheme not in {"http", "https"} or parts.hostname not in {"127.0.0.1", "localhost", "::1"}:
-            raise RecognitionRelayError(503, "connection_invalid", CONNECTION_INFO_INVALID)
+        if parts.scheme not in {"http", "https"} or parts.hostname not in {
+            "127.0.0.1",
+            "localhost",
+            "::1",
+        }:
+            raise RecognitionRelayError(
+                503, "connection_invalid", CONNECTION_INFO_INVALID
+            )
         return base_url.rstrip("/") + "/", token
 
-    def _request(self, method: str, path: str, body: dict[str, Any] | None = None) -> dict[str, Any]:
+    def _request(
+        self, method: str, path: str, body: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         base_url, token = self._connection()
         data = None if body is None else json.dumps(body).encode("utf-8")
         request = urllib.request.Request(base_url + path, data=data, method=method)
@@ -129,13 +152,19 @@ class AutomationRelay:
             code = _error_code(error.read())
             raise RecognitionRelayError(error.code, code, user_message(code)) from None
         except TimeoutError:
-            raise RecognitionRelayError(504, "request_timeout", REQUEST_TIMEOUT) from None
+            raise RecognitionRelayError(
+                504, "request_timeout", REQUEST_TIMEOUT
+            ) from None
         except (urllib.error.URLError, ConnectionError, OSError):
-            raise RecognitionRelayError(503, "desktop_unavailable", DESKTOP_UNAVAILABLE) from None
+            raise RecognitionRelayError(
+                503, "desktop_unavailable", DESKTOP_UNAVAILABLE
+            ) from None
         try:
             payload = json.loads(raw.decode("utf-8")) if raw else {}
         except (UnicodeDecodeError, ValueError):
-            raise RecognitionRelayError(502, "invalid_response", INVALID_RESPONSE) from None
+            raise RecognitionRelayError(
+                502, "invalid_response", INVALID_RESPONSE
+            ) from None
         if not isinstance(payload, dict):
             raise RecognitionRelayError(502, "invalid_response", INVALID_RESPONSE)
         return payload

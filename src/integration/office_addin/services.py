@@ -40,7 +40,7 @@ def read_symbol_fonts(mathjax: Path) -> tuple[str, ...]:
     start, end = config.find("{"), config.rfind("}")
     if start < 0 or end <= start:
         raise ValueError("Invalid MathJax font configuration.")
-    fonts = tuple(json.loads(config[start:end + 1])["fonts"])
+    fonts = tuple(json.loads(config[start : end + 1])["fonts"])
     if not fonts:
         raise ValueError("MathJax font catalog is empty.")
     return fonts
@@ -95,11 +95,14 @@ class OfficeAddinServiceImpl:
         except RuntimeError as error:
             message = (
                 "未找到 Microsoft Word 的 mathml2omml.xsl，无法生成 Word 原生公式。请确认 Word 已安装在“应用程序”文件夹。"
-                if "was not found" in str(error) else "Word 公式转换失败。"
+                if "was not found" in str(error)
+                else "Word 公式转换失败。"
             )
             raise OfficeApiError(500, "omml_unavailable", message) from None
         except ValueError:
-            raise OfficeApiError(422, "omml_failed", "MathML 无法转换为 Word 公式。") from None
+            raise OfficeApiError(
+                422, "omml_failed", "MathML 无法转换为 Word 公式。"
+            ) from None
 
     # Settings ----------------------------------------------------------------
 
@@ -122,7 +125,9 @@ class OfficeAddinServiceImpl:
             if not isinstance(follow, bool):
                 raise TypographyError("无效的预设字号模式。")
             defaults = HostDefaults(typography, follow)
-            self.settings.save(host, defaults, str(payload.get("insertionBackend") or ""))
+            self.settings.save(
+                host, defaults, str(payload.get("insertionBackend") or "")
+            )
         except TypographyError as error:
             raise OfficeApiError(422, "invalid_settings", str(error)) from None
         return settings_payload(defaults, str(payload["insertionBackend"]))
@@ -139,7 +144,11 @@ class OfficeAddinServiceImpl:
             raise OfficeApiError(422, "invalid_preset", "无法读取预设文件。") from None
         except TypographyError as error:
             raise OfficeApiError(422, "invalid_preset", str(error)) from None
-        return {"kind": "import", "name": path.stem, "settings": self.load_settings(host)}
+        return {
+            "kind": "import",
+            "name": path.stem,
+            "settings": self.load_settings(host),
+        }
 
     def export_settings(self, host: str) -> dict[str, Any]:
         path = self._choose("save", host)
@@ -157,7 +166,9 @@ class OfficeAddinServiceImpl:
         label = "Word" if host == "word" else "PowerPoint"
         if mode == "open":
             return self.files.open_json(f"导入 {label} 公式预设")
-        return self.files.save_json(f"导出 {label} 公式预设", f"LaTeXSnipper {label} 公式.json")
+        return self.files.save_json(
+            f"导出 {label} 公式预设", f"LaTeXSnipper {label} 公式.json"
+        )
 
     # Recognition -------------------------------------------------------------
 

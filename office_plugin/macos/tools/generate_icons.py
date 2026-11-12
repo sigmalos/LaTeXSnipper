@@ -62,7 +62,12 @@ def insert(draw, s):
 
 def ocr(draw, s):
     w, m, c = s * 0.07, s * 0.1, s * 0.28
-    for x, y, dx, dy in ((m, m, 1, 1), (s - m, m, -1, 1), (m, s - m, 1, -1), (s - m, s - m, -1, -1)):
+    for x, y, dx, dy in (
+        (m, m, 1, 1),
+        (s - m, m, -1, 1),
+        (m, s - m, 1, -1),
+        (s - m, s - m, -1, -1),
+    ):
         draw.line((x, y, x + dx * c, y), fill=INK, width=int(w))
         draw.line((x, y, x, y + dy * c), fill=INK, width=int(w))
     text(draw, (s * 0.2, s * 0.2, s * 0.8, s * 0.8), "x", ACCENT, 1.0)
@@ -92,7 +97,9 @@ def delete(draw, s):
     w = int(s * 0.07)
     draw.rectangle((s * 0.16, s * 0.2, s * 0.84, s * 0.27), fill=INK)
     draw.rectangle((s * 0.38, s * 0.1, s * 0.62, s * 0.2), outline=INK, width=w)
-    draw.rounded_rectangle((s * 0.24, s * 0.3, s * 0.76, s * 0.92), radius=s * 0.06, outline=INK, width=w)
+    draw.rounded_rectangle(
+        (s * 0.24, s * 0.3, s * 0.76, s * 0.92), radius=s * 0.06, outline=INK, width=w
+    )
     for x in (0.39, 0.5, 0.61):
         draw.line((s * x, s * 0.42, s * x, s * 0.8), fill=DANGER, width=w)
 
@@ -105,12 +112,17 @@ def format_selected(draw, s):
 def format_all(draw, s):
     text(draw, (0, 0, s, s * 0.58), "Aa", INK, 0.9)
     for index, y in enumerate((0.66, 0.78, 0.9)):
-        draw.rectangle((s * 0.12, s * (y - 0.04), s * (0.88 - index * 0.12), s * (y + 0.03)), fill=ACCENT)
+        draw.rectangle(
+            (s * 0.12, s * (y - 0.04), s * (0.88 - index * 0.12), s * (y + 0.03)),
+            fill=ACCENT,
+        )
 
 
 def pane(draw, s):
     w = int(s * 0.07)
-    draw.rounded_rectangle((s * 0.08, s * 0.14, s * 0.92, s * 0.86), radius=s * 0.06, outline=INK, width=w)
+    draw.rounded_rectangle(
+        (s * 0.08, s * 0.14, s * 0.92, s * 0.86), radius=s * 0.06, outline=INK, width=w
+    )
     draw.rectangle((s * 0.6, s * 0.14, s * 0.92, s * 0.86), fill=ACCENT)
     for y in (0.36, 0.5, 0.64):
         draw.line((s * 0.2, s * y, s * 0.48, s * y), fill=INK, width=w)
@@ -125,7 +137,9 @@ def settings(draw, s):
         radius = outer if index % 4 in (1, 2) else inner
         points.append((cx + radius * math.cos(angle), cy + radius * math.sin(angle)))
     draw.polygon(points, fill=INK)
-    draw.ellipse((cx - s * 0.13, cy - s * 0.13, cx + s * 0.13, cy + s * 0.13), fill=(0, 0, 0, 0))
+    draw.ellipse(
+        (cx - s * 0.13, cy - s * 0.13, cx + s * 0.13, cy + s * 0.13), fill=(0, 0, 0, 0)
+    )
 
 
 def help_icon(draw, s):

@@ -46,7 +46,9 @@ def test_typography_fields_match_windows_wire_names():
         "fontSizePoints": 12.0,
         "color": "#ABCDEF",
     }
-    assert Typography.from_fields(fields) == Typography(number_font_family="Arial", color="#ABCDEF")
+    assert Typography.from_fields(fields) == Typography(
+        number_font_family="Arial", color="#ABCDEF"
+    )
 
 
 @pytest.mark.parametrize(
@@ -85,8 +87,9 @@ def test_windows_preset_imports_and_reexports(tmp_path):
     assert imported.typography.default_math_style == "BoldItalic"
     assert imported.typography.font_size_points == 10.5
     exported = json.loads(store.export_preset("word"))
-    assert exported == json.loads(WINDOWS_PRESET) | {"typography": {
-        **json.loads(WINDOWS_PRESET)["typography"], "color": "#1F2937"}}
+    assert exported == json.loads(WINDOWS_PRESET) | {
+        "typography": {**json.loads(WINDOWS_PRESET)["typography"], "color": "#1F2937"}
+    }
     defaults, backend = store.load("word")
     assert backend == "Omml"
     assert store.load("powerpoint")[0] == HostDefaults()
@@ -121,7 +124,8 @@ def test_symbol_font_catalog_comes_from_packaged_mathjax():
 def test_manifest_renders_and_is_valid_xml():
     rendered = sideload.render_manifest(
         (MACOS / "manifest.xml").read_text(encoding="utf-8"),
-        base_url="https://localhost:28766", product_version="3.3.0",
+        base_url="https://localhost:28766",
+        product_version="3.3.0",
     )
     root = ElementTree.fromstring(rendered)
     namespace = {"o": "http://schemas.microsoft.com/office/appforoffice/1.1"}
@@ -159,7 +163,9 @@ def test_install_and_remove_touch_only_this_add_in(tmp_path):
     assert len(written) == 2
     assert sideload.installed_hosts(tmp_path) == ["word", "powerpoint"]
     assert sorted(path.name for path in other.parent.iterdir()) == [
-        sideload.MANIFEST_FILENAME, "someone-else.xml"]
+        sideload.MANIFEST_FILENAME,
+        "someone-else.xml",
+    ]
     sideload.remove_manifest(tmp_path)
     assert sideload.installed_hosts(tmp_path) == []
     assert other.is_file()
@@ -178,7 +184,9 @@ class FakeResponse(io.BytesIO):
 
 def connection_file(tmp_path, base_url="http://127.0.0.1:28765"):
     path = tmp_path / "automation-api.json"
-    path.write_text(json.dumps({"base_url": base_url, "token": "secret-token"}), encoding="utf-8")
+    path.write_text(
+        json.dumps({"base_url": base_url, "token": "secret-token"}), encoding="utf-8"
+    )
     return path
 
 
@@ -199,7 +207,9 @@ def test_relay_authenticates_and_forwards_next_result(tmp_path):
 
 def test_relay_maps_job_errors_to_user_messages(tmp_path):
     payload = b'{"job":{"id":"j1","state":"failed","error":{"code":"model_unavailable","message":"x"}}}'
-    relay = AutomationRelay(connection_file(tmp_path), opener=lambda request, timeout: FakeResponse(payload))
+    relay = AutomationRelay(
+        connection_file(tmp_path), opener=lambda request, timeout: FakeResponse(payload)
+    )
     assert "MathCraft" in relay.job("j1")["job"]["error"]["message"]
 
 
@@ -210,8 +220,13 @@ def test_relay_reports_missing_desktop_and_http_errors(tmp_path):
     assert missing.value.code == "desktop_unavailable"
 
     def busy(request, timeout):
-        raise urllib.error.HTTPError(request.full_url, 409, "busy", {},
-                                     io.BytesIO(b'{"error":{"code":"next_result_busy"}}'))
+        raise urllib.error.HTTPError(
+            request.full_url,
+            409,
+            "busy",
+            {},
+            io.BytesIO(b'{"error":{"code":"next_result_busy"}}'),
+        )
 
     relay = AutomationRelay(connection_file(tmp_path), opener=busy)
     with pytest.raises(RecognitionRelayError) as error:
@@ -219,9 +234,13 @@ def test_relay_reports_missing_desktop_and_http_errors(tmp_path):
     assert (error.value.status, error.value.code) == (409, "next_result_busy")
 
 
-@pytest.mark.parametrize("base_url", ["http://192.168.1.2:28765", "file:///etc/passwd", "http://example.com"])
+@pytest.mark.parametrize(
+    "base_url", ["http://192.168.1.2:28765", "file:///etc/passwd", "http://example.com"]
+)
 def test_relay_only_talks_to_loopback(tmp_path, base_url):
-    relay = AutomationRelay(connection_file(tmp_path, base_url), opener=lambda *a, **k: None)
+    relay = AutomationRelay(
+        connection_file(tmp_path, base_url), opener=lambda *a, **k: None
+    )
     with pytest.raises(RecognitionRelayError) as error:
         relay.config()
     assert error.value.code == "connection_invalid"
@@ -229,8 +248,10 @@ def test_relay_only_talks_to_loopback(tmp_path, base_url):
 
 def test_relay_job_ids_are_path_escaped(tmp_path):
     seen = []
-    relay = AutomationRelay(connection_file(tmp_path),
-                            opener=lambda request, timeout: seen.append(request) or FakeResponse(b"{}"))
+    relay = AutomationRelay(
+        connection_file(tmp_path),
+        opener=lambda request, timeout: seen.append(request) or FakeResponse(b"{}"),
+    )
     relay.cancel("a/../b")
     assert seen[0].full_url.endswith("/api/v1/recognition/jobs/a%2F..%2Fb")
     assert seen[0].get_method() == "DELETE"
